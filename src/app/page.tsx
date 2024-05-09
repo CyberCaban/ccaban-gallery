@@ -8,6 +8,8 @@ const urls = [
   "https://utfs.io/f/f69944ea-0a29-48d3-bb66-5be762e136e9-shtgsn.jpg",
 ];
 
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   const posts = await db.query.posts.findMany();
 

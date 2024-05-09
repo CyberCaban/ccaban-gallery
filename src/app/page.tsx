@@ -10,8 +10,8 @@ async function Images() {
   });
   return (
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 ">
-      {[...images, ...images].map((image, idx) => (
-        <div key={`${idx + 1}`} className="w-full p-4">
+      {images.map((image) => (
+        <div key={image.id} className="w-full p-4">
           <Image
             width={1000}
             height={1000}

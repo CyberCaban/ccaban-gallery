@@ -7,7 +7,7 @@ This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3
 - [x] деплой на vercel
 - [x] создать бд (vercel postgres)
 - [x] настроить взаимодействие с бд
-- [ ] аутентификация
+- [x] аутентификация
 - [ ] загрузка изображений
 - [ ] удаление изображений
 - [ ] image routing (parallel route)

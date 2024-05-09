@@ -4,7 +4,7 @@ This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3
 
 ## TODO
 
-- [ ] деплой на vercel
+- [x] деплой на vercel
 - [ ] создать бд (vercel postgres)
 - [ ] настроить взаимодействие с бд
 - [ ] аутентификация

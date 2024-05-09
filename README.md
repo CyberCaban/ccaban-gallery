@@ -5,8 +5,8 @@ This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3
 ## TODO
 
 - [x] деплой на vercel
-- [ ] создать бд (vercel postgres)
-- [ ] настроить взаимодействие с бд
+- [x] создать бд (vercel postgres)
+- [x] настроить взаимодействие с бд
 - [ ] аутентификация
 - [ ] загрузка изображений
 - [ ] удаление изображений

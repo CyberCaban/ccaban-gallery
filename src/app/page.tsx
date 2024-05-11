@@ -1,5 +1,6 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import Image from "next/image";
+import Link from "next/link";
 import { getMyImages } from "~/server/queries";
 
 export const dynamic = "force-dynamic";
@@ -7,16 +8,18 @@ export const dynamic = "force-dynamic";
 async function Images() {
   const images = await getMyImages();
   return (
-    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 ">
+    <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 ">
       {images.map((image) => (
         <div key={image.id} className="w-full p-4">
-          <Image
-            width={480}
-            height={360}
-            src={image.url}
-            alt={image.name}
-            className="rounded-lg"
-          />
+          <Link href={`/img/${image.id}`}>
+            <Image
+              width={480}
+              height={360}
+              src={image.url}
+              alt={image.name}
+              className="rounded-lg"
+            />
+          </Link>
           <span>{image.name}</span>
         </div>
       ))}

@@ -11,8 +11,8 @@ async function Images() {
       {images.map((image) => (
         <div key={image.id} className="w-full p-4">
           <Image
-            width={1000}
-            height={1000}
+            width={480}
+            height={360}
             src={image.url}
             alt={image.name}
             className="rounded-lg"

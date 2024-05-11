@@ -9,8 +9,8 @@ This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3
 - [x] настроить взаимодействие с бд
 - [x] аутентификация
 - [x] загрузка изображений
+- [x] image routing (parallel route)
 - [ ] удаление изображений
-- [ ] image routing (parallel route)
 - [ ] добавить отдельными компонентами мои проекты (Tags, GrVi)
 - [ ] PokeCenterRe
 

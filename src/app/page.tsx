@@ -8,9 +8,9 @@ export const dynamic = "force-dynamic";
 async function Images() {
   const images = await getMyImages();
   return (
-    <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 ">
+    <div className="flex flex-wrap justify-center gap-4 p-4">
       {images.map((image) => (
-        <div key={image.id} className="w-full p-4">
+        <div key={image.id} className="flex h-48 w-48 flex-col">
           <Link href={`/img/${image.id}`}>
             <Image
               width={480}

@@ -5,13 +5,18 @@ export default async function FullPageImageView(props: { id: number }) {
   if (!image) return null;
 
   return (
-    <img
-      className="w-[80%]"
-      src={image.url}
-      alt={image.name}
-      width={480}
-      height={360}
-      loading="lazy"
-    />
+    <div className="flex h-full w-screen min-w-0 items-center justify-center bg-black/60 text-white">
+      <div className="ml-4 flex-shrink flex-grow">
+        <img
+          src={image.url}
+          alt={image.name}
+          loading="lazy"
+          className="object-contain"
+        />
+      </div>
+      <div className="border-1 flex h-full w-56 flex-shrink-0 flex-col">
+        <div className="text-xl font-bold">{image.name}</div>
+      </div>
+    </div>
   );
 }

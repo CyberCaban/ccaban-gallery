@@ -12,6 +12,7 @@ export default async function FullPageImageView(props: { id: number }) {
           alt={image.name}
           loading="lazy"
           className="object-contain"
+          style={{ viewTransitionName: `img-${image.id}` }}
         />
       </div>
       <div className="border-1 flex h-full w-56 flex-shrink-0 flex-col">

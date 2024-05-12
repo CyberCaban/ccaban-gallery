@@ -1,6 +1,7 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import Image from "next/image";
-import Link from "next/link";
+// import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { getMyImages } from "~/server/queries";
 
 export const dynamic = "force-dynamic";
@@ -11,7 +12,10 @@ async function Images() {
     <div className="flex flex-wrap justify-center gap-4 p-4">
       {images.map((image) => (
         <div key={image.id} className="flex h-48 w-48 flex-col">
-          <Link href={`/img/${image.id}`}>
+          <Link
+            href={`/img/${image.id}`}
+            style={{ viewTransitionName: `img-${image.id}` }}
+          >
             <Image
               width={480}
               height={360}

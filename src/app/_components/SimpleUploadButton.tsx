@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useUploadThing } from "../utils/uploadthing";
+import { toast } from "sonner";
 
 type Input = Parameters<typeof useUploadThing>;
 
@@ -51,7 +52,15 @@ function SimpleUploadButton({ ...args }: Input) {
   const { inputProps, isUploading } = useUploadThingInputProps(
     "imageUploader",
     {
+      onUploadBegin: () => {
+        toast.loading("Uploading...", {
+          duration: 10000,
+          id: "uploading",
+        });
+      },
       onClientUploadComplete: () => {
+        toast.dismiss("uploading");
+        toast.success("Uploaded!");
         router.refresh();
       },
     },

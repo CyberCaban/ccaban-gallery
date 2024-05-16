@@ -1,5 +1,5 @@
 import { Button } from "~/components/ui/button";
-import { getImageById } from "~/server/queries";
+import { deleteImage, getImageById } from "~/server/queries";
 
 export default async function FullPageImageView(props: { id: number }) {
   const image = await getImageById(props.id);
@@ -22,7 +22,17 @@ export default async function FullPageImageView(props: { id: number }) {
         <a href={image.url}>
           <p className="text-wrap text-sm text-gray-400">{image.url}</p>
         </a>
-        <Button variant="destructive">Delete</Button>
+        <form
+          action={async () => {
+            "use server";
+
+            await deleteImage(image.id);
+          }}
+        >
+          <Button type="submit" variant="destructive">
+            Delete
+          </Button>
+        </form>
       </div>
     </div>
   );

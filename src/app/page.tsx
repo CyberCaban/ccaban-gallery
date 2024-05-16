@@ -7,6 +7,7 @@ export default async function HomePage() {
     <main className="flex min-h-[calc(100vh-6.5rem)] flex-col items-center justify-center">
       <div className="container flex flex-col items-center justify-center gap-12 px-4 py-4 ">
         <Link href={"/gallery"}>to gallery</Link>
+        <Link href={"/pokecenter"}>to Pokedex</Link>
       </div>
     </main>
   );

@@ -3,20 +3,12 @@
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { UploadButton } from "../utils/uploadthing";
 import { usePathname, useRouter } from "next/navigation";
+import SimpleUploadButton from "./SimpleUploadButton";
 
 function FileUploadButton() {
   const pathname = usePathname();
   const router = useRouter();
-  return (
-    <>
-      {pathname.includes("/gallery") ? (
-        <UploadButton
-          endpoint="imageUploader"
-          onClientUploadComplete={() => router.refresh()}
-        />
-      ) : null}
-    </>
-  );
+  return <>{pathname.includes("/gallery") ? <SimpleUploadButton /> : null}</>;
 }
 
 function TopNav() {

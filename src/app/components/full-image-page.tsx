@@ -1,3 +1,4 @@
+import { Button } from "~/components/ui/button";
 import { getImageById } from "~/server/queries";
 
 export default async function FullPageImageView(props: { id: number }) {
@@ -5,8 +6,8 @@ export default async function FullPageImageView(props: { id: number }) {
   if (!image) return null;
 
   return (
-    <div className="flex h-full w-screen min-w-0 items-center justify-center bg-black/60 text-white">
-      <div className="ml-4 max-h-full rounded-xl shadow-white drop-shadow-lg">
+    <div className="flex h-full w-screen min-w-0 flex-row items-center justify-center gap-4 bg-black/60 text-white">
+      <div className="flex flex-1 justify-center rounded-xl shadow-white drop-shadow-lg">
         <img
           src={image.url}
           alt={image.name}
@@ -14,13 +15,14 @@ export default async function FullPageImageView(props: { id: number }) {
           className="object-contain"
         />
       </div>
-      <div className="border-1 flex max-h-full w-56 flex-col rounded-lg border border-white p-4">
-        <div className="text-xl font-bold">{image.name}</div>
-        <div>
-          <a href={image.url}>
-            <p className="text-sm text-gray-400">{image.url}</p>
-          </a>
+      <div className="flex-2 flex h-1/2 max-w-56 flex-col rounded-lg ">
+        <div className="text-pretty text-center text-xl font-bold">
+          {image.name}
         </div>
+        <a href={image.url}>
+          <p className="text-wrap text-sm text-gray-400">{image.url}</p>
+        </a>
+        <Button variant="destructive">Delete</Button>
       </div>
     </div>
   );

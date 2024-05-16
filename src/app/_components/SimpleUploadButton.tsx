@@ -52,16 +52,20 @@ function SimpleUploadButton({ ...args }: Input) {
   const { inputProps, isUploading } = useUploadThingInputProps(
     "imageUploader",
     {
-      onUploadBegin: () => {
+      onUploadBegin() {
         toast.loading("Uploading...", {
           duration: 10000,
           id: "uploading",
         });
       },
-      onClientUploadComplete: () => {
+      onClientUploadComplete() {
         toast.dismiss("uploading");
         toast.success("Uploaded!");
         router.refresh();
+      },
+      onUploadError() {
+        toast.dismiss("uploading");
+        toast.error("Failed to upload");
       },
     },
   );

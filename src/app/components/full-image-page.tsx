@@ -6,8 +6,8 @@ export default async function FullPageImageView(props: { id: number }) {
   if (!image) return null;
 
   return (
-    <div className="flex h-full w-screen min-w-0 flex-row items-center justify-center gap-4 bg-black/60 text-white">
-      <div className="flex flex-1 justify-center rounded-xl shadow-white drop-shadow-lg">
+    <div className="flex h-full w-screen min-w-0 items-center justify-center text-white">
+      <div className="flex-shrink flex-grow">
         <img
           src={image.url}
           alt={image.name}
@@ -15,24 +15,25 @@ export default async function FullPageImageView(props: { id: number }) {
           className="object-contain"
         />
       </div>
-      <div className="flex-2 flex h-1/2 max-w-56 flex-col rounded-lg ">
-        <div className="text-pretty text-center text-xl font-bold">
-          {image.name}
-        </div>
-        <a href={image.url}>
+      <div className="flex h-full w-56 flex-shrink-0 flex-col border-l">
+        <div className="border-b p-2 text-center text-xl">{image.name}</div>
+        <a href={image.url} className="p-2">
           <p className="text-wrap text-sm text-gray-400">{image.url}</p>
         </a>
-        <form
-          action={async () => {
-            "use server";
 
-            await deleteImage(image.id);
-          }}
-        >
-          <Button type="submit" variant="destructive">
-            Delete
-          </Button>
-        </form>
+        <div className="p-2">
+          <form
+            action={async () => {
+              "use server";
+
+              await deleteImage(image.id);
+            }}
+          >
+            <Button type="submit" variant="destructive">
+              Delete
+            </Button>
+          </form>
+        </div>
       </div>
     </div>
   );

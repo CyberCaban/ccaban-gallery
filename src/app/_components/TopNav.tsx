@@ -14,7 +14,7 @@ function FileUploadButton() {
 function TopNav() {
   const pathname = usePathname();
   return (
-    <nav className="flex w-full flex-row justify-between border-b-2 border-white bg-black p-4 text-xl font-semibold">
+    <nav className="flex h-16 w-full flex-row justify-between border-b-2 border-white bg-black p-4 text-xl font-semibold">
       <Link href={"/"}>CCaban Gallery</Link>
       {/* <pre>{pathname}</pre> */}
       <h1></h1>

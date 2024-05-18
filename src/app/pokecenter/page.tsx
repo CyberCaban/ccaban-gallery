@@ -11,7 +11,7 @@ export default function PokecenterPage({
   return (
     <div>
       {JSON.stringify(searchParams)}
-      <SelectPokedex />
+      <SelectPokedex searchParams={searchParams} />
     </div>
   );
 }

@@ -1,3 +1,5 @@
+import { OtherPokemonSprites, Pokemon, PokemonSprites } from "pokenode-ts";
+
 export type PokedexSearchParams = {
   pokedex: string;
   page: number;
@@ -20,16 +22,15 @@ export type spriteTypes =
   | "showdown_back_default"
   | "showdown_back_shiny";
 
-export type OtherSprites = {
-  other: {
-    dream_world: { front_default: string };
-    home: { front_default: string; front_shiny: string };
-    official_artwork: { front_default: string; front_shiny: string };
-    showdown: {
-      front_default: string;
-      front_shiny: string;
-      back_default: string;
-      back_shiny: string;
-    };
+export interface PokemonOtherSprites extends OtherPokemonSprites {
+  showdown: {
+    front_default: string;
+    front_shiny: string;
+    back_default: string;
+    back_shiny: string;
   };
-};
+}
+
+export interface PokemonSpritesWithShowdown extends PokemonSprites {
+  other: PokemonOtherSprites;
+}

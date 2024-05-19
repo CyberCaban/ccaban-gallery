@@ -39,7 +39,7 @@ export default function RootLayout({
         />
         <body className={`font-sans ${inter.variable} dark`}>
           <TopNav />
-          <main className="overflow-y-scroll">{children}</main>
+          <main className="">{children}</main>
           <div id="modal-root" />
           <Toaster />
         </body>

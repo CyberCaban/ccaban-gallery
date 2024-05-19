@@ -1,16 +1,18 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import { capitalize } from "~/lib/utils";
-import { GameClient, PokemonClient } from "pokenode-ts";
+import { capitalize, getPokemonImageUrl } from "~/lib/utils";
+import { GameClient, type Pokemon, PokemonClient } from "pokenode-ts";
 import Link from "next/link";
 import { type PokedexSearchParams } from "~/lib/types";
 import { Button } from "~/components/ui/button";
+import { redirect } from "next/navigation";
 
 // export const dynamic = "force-dynamic";
 
 async function PokedexList() {
   const gc = new GameClient();
-  const pokemon = (await gc.listPokedexes(0, 40)).results.reduce(
+  const pokedexes = (await gc.listPokedexes(0, 40)).results.reduce(
     (acc, curr) => {
       return [...acc, curr.name] as string[];
     },
@@ -18,12 +20,12 @@ async function PokedexList() {
   );
 
   return (
-    <ul className="h-96 w-40 overflow-y-scroll text-nowrap bg-zinc-900 p-2">
-      {pokemon.map((pokedex: string) => (
-        <label htmlFor={pokedex} key={pokedex}>
-          <Link href={{ query: { pokedex, page: 1 } }}>
+    <ul className="h-96 w-56 overflow-x-hidden overflow-y-scroll text-nowrap bg-zinc-900 p-2">
+      {pokedexes.map((pokedex: string) => (
+        <label htmlFor={pokedex} key={pokedex} className="w-full">
+          <Link href={{ query: { pokedex, page: 1, sprite: "front_default" } }}>
             <li
-              className="rounded-md p-4 text-xl hover:bg-zinc-950"
+              className="w-full rounded-md p-4 text-[clamp(1rem,1.5vw,2rem)] hover:bg-zinc-950"
               id={pokedex}
             >
               {capitalize(pokedex)}
@@ -42,67 +44,106 @@ async function Pokemons({
 }) {
   const gc = new GameClient();
   const pokemons = await gc.getPokedexByName(searchParams.pokedex);
-  console.log(searchParams.pokedex ?? "national");
   const p = new PokemonClient();
   const pokemonNames = pokemons.pokemon_entries.slice(
     10 * (searchParams.page - 1),
     10 * searchParams.page,
   );
 
-  const pokemonPics = await Promise.all(
+  let pokemonPics: Pokemon[] = (await Promise.allSettled(
     pokemonNames.map(async (pokemon) => {
-      return p
-        .getPokemonByName(pokemon.pokemon_species.name)
-        .then((p) => p.sprites)
-        .catch((e) => console.log(e));
+      return await p.getPokemonByName(pokemon?.pokemon_species?.name);
     }),
-  );
-  // console.log(typeof pokemonPics[9]?.other);
+  ).then((values) =>
+    values.map((value) =>
+      value.status === "fulfilled"
+        ? value.value
+        : { name: "missingno", id: Infinity },
+    ),
+  )) as Pokemon[];
+  pokemonPics = pokemonPics.filter((pokemon) => pokemon.name !== "missingno");
+  console.log(pokemonPics[0]);
 
   return (
-    <div className="flex flex-col">
-      <nav className="mx-4 my-2 flex flex-row gap-4">
-        <Link
-          href={{
-            query: {
-              pokedex: searchParams.pokedex,
-              page: searchParams.page > 1 ? +searchParams.page - 1 : 1,
-            },
+    <div className="flex w-4/5 flex-col overflow-y-hidden">
+      <nav className="flex flex-row gap-4">
+        <div className="mx-4 my-2 flex flex-row gap-4">
+          <Link
+            href={{
+              query: {
+                pokedex: searchParams.pokedex,
+                page: searchParams.page > 1 ? +searchParams.page - 1 : 1,
+                sprite: searchParams.sprite,
+              },
+            }}
+          >
+            <Button size={"sm"}>Prev Page</Button>
+          </Link>
+          <Link
+            href={{
+              query: {
+                pokedex: searchParams.pokedex,
+                page:
+                  pokemonNames.length === 10
+                    ? +searchParams.page + 1
+                    : +searchParams.page,
+                sprite: searchParams.sprite,
+              },
+            }}
+          >
+            <Button size={"sm"}>Next Page</Button>
+          </Link>
+        </div>
+        <form
+          action={async (e) => {
+            "use server";
+            redirect(
+              `/pokecenter?pokedex=${searchParams.pokedex}&page=${searchParams.page}&sprite=${e.get("sprite")}`,
+            );
           }}
+          method="get"
+          className=""
         >
-          <Button>Prev Page</Button>
-        </Link>
-        <Link
-          href={{
-            query: {
-              pokedex: searchParams.pokedex,
-              page:
-                pokemonNames.length === 10
-                  ? +searchParams.page + 1
-                  : +searchParams.page,
-            },
-          }}
-        >
-          <Button>Next Page</Button>
-        </Link>
+          <select
+            name="sprite"
+            id="sprite_select"
+            className="bg-zinc-900"
+            defaultValue={searchParams.sprite}
+          >
+            <option value="front_default">front_default</option>
+            <option value="back_default">back_default</option>
+            <option value="front_shiny">front_shiny</option>
+            <option value="back_shiny">back_shiny</option>
+            <option value="dream_world">dream_world</option>
+            <option value="official_artwork">official_artwork</option>
+            <option value="home_default">home</option>
+            <option value="showdown_front_default">showdown</option>
+          </select>
+          <button type="submit">Submit</button>
+        </form>
       </nav>
       <div className="flex flex-wrap justify-center text-center transition">
-        {pokemonNames.map((p, i) => (
-          <div key={p.entry_number}>
-            <span className="text-xl">
-              {capitalize(p.pokemon_species.name)}
-            </span>
-            <img
-              src={
-                pokemonPics[i]?.other?.["official-artwork"].front_default ?? ""
-              }
-              alt=""
-              width={200}
-              height={200}
-              className="rounded-lg transition hover:scale-105 hover:drop-shadow-[0px_0px_5px_rgba(255,0,0,1.0)]"
-            />
-          </div>
-        ))}
+        {pokemonPics.map((p, i) => {
+          return (
+            <div key={p.id}>
+              <span className="text-xl">{capitalize(p.name)}</span>
+              <div className="h-48 w-48 ">
+                <img
+                  src={
+                    getPokemonImageUrl(p, searchParams.sprite) ??
+                    pokemonPics[i]?.sprites?.other?.["official-artwork"]
+                      .front_default
+                  }
+                  alt={`Failed to load ${p.name}`}
+                  width={200}
+                  height={200}
+                  loading="lazy"
+                  className="h-full w-full rounded-lg object-contain transition hover:scale-105 hover:drop-shadow-[0px_0px_5px_rgba(255,0,0,1.0)]"
+                />
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
@@ -117,7 +158,7 @@ export default function SelectPokedex({
     pokedex: searchParams.pokedex ?? "national",
     page: searchParams.page ?? 1,
     limit: 10,
-    sprite: "front_default",
+    sprite: searchParams.sprite ?? "front_default",
   };
   return (
     <div

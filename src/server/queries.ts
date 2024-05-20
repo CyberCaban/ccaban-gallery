@@ -12,7 +12,8 @@ export async function getMyImages() {
   if (!user.userId) throw new Error("Unauthorized");
 
   return await db.query.images.findMany({
-    where: (model, { eq }) => eq(model.userId, user.userId),
+    where: (model, { eq, and }) =>
+      and(eq(model.userId, user.userId), eq(model.deleted, false)),
     orderBy: (model, { desc }) => desc(model.id),
   });
 }
@@ -36,7 +37,8 @@ export async function deleteImage(id: number) {
   if (!user) throw new Error("Unauthorized");
 
   await db
-    .delete(images)
+    .update(images)
+    .set({ deleted: true })
     .where(and(eq(images.id, id), eq(images.userId, user.userId)));
 
   redirect("/gallery");

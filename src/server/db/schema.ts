@@ -3,6 +3,7 @@
 
 import { sql } from "drizzle-orm";
 import {
+  boolean,
   index,
   pgTableCreator,
   serial,
@@ -29,6 +30,7 @@ export const images = createTable(
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
     updatedAt: timestamp("updatedAt"),
+    deleted: boolean("deleted").notNull().default(false),
   },
   (example) => ({
     nameIndex: index("name_idx").on(example.name),

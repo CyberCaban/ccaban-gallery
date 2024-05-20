@@ -15,7 +15,7 @@ export default function GalleryLayout({
 }) {
   return (
     <>
-      <div className="">{children}</div>
+      {children}
       {modal}
     </>
   );

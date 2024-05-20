@@ -38,8 +38,10 @@ export default function RootLayout({
           routerConfig={extractRouterConfig(ourFileRouter)}
         />
         <body className={`font-sans ${inter.variable} dark`}>
-          <TopNav />
-          <main className="">{children}</main>
+          <div className="grid h-screen grid-rows-[auto,1fr]">
+            <TopNav />
+            <main className="">{children}</main>
+          </div>
           <div id="modal-root" />
           <Toaster />
         </body>

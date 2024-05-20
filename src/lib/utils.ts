@@ -17,7 +17,7 @@ export function capitalize(str: string) {
 }
 
 export function getPokemonImageUrl(
-  pokemon: PokemonSpritesWithShowdown,
+  pokemon: PokemonSprites,
   sprite: spriteTypes,
 ) {
   if (!pokemon) return "";
@@ -31,7 +31,7 @@ export function getPokemonImageUrl(
   if (sprite === "official_artwork")
     return pokemon?.other?.["official-artwork"]?.front_default;
   if (sprite === "showdown_front_default")
-    return pokemon?.other?.showdown.front_default;
+    return pokemon.other?.showdown.front_default;
   if (sprite === "showdown_front_shiny")
     return pokemon.other?.showdown.front_shiny;
   if (sprite === "showdown_back_default")

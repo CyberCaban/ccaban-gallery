@@ -25,7 +25,7 @@ async function PokedexList() {
         <label htmlFor={pokedex} key={pokedex} className="w-full">
           <Link href={{ query: { pokedex, page: 1, sprite: "front_default" } }}>
             <li
-              className="w-full rounded-md p-4 text-[clamp(1rem,1.5vw,2rem)] hover:bg-zinc-950"
+              className="w-full rounded-md p-4 text-[1.5rem] hover:bg-zinc-950"
               id={pokedex}
             >
               {capitalize(pokedex)}
@@ -62,7 +62,7 @@ async function Pokemons({
     ),
   )) as Pokemon[];
   pokemonPics = pokemonPics.filter((pokemon) => pokemon.name !== "missingno");
-  console.log(pokemonPics[0]);
+  console.log(pokemonPics[0]?.sprites.other);
 
   return (
     <div className="flex w-4/5 flex-col overflow-y-hidden">
@@ -102,7 +102,7 @@ async function Pokemons({
             );
           }}
           method="get"
-          className=""
+          className="flex items-center justify-center gap-4"
         >
           <select
             name="sprite"
@@ -119,28 +119,35 @@ async function Pokemons({
             <option value="home_default">home</option>
             <option value="showdown_front_default">showdown</option>
           </select>
-          <button type="submit">Submit</button>
+          <button type="submit" className="rounded-sm bg-zinc-900 px-2 py-1">
+            Submit
+          </button>
         </form>
       </nav>
       <div className="flex flex-wrap justify-center text-center transition">
         {pokemonPics.map((p, i) => {
           return (
-            <div key={p.id}>
-              <span className="text-xl">{capitalize(p.name)}</span>
-              <div className="h-48 w-48 ">
+            <div
+              key={p.id}
+              className="m-2 flex w-48 flex-col items-center rounded-sm p-3 outline outline-1 outline-white"
+            >
+              <div className="m-2 h-48 w-48">
                 <img
                   src={
-                    getPokemonImageUrl(p, searchParams.sprite) ??
-                    pokemonPics[i]?.sprites?.other?.["official-artwork"]
-                      .front_default
+                    getPokemonImageUrl(p.sprites, searchParams.sprite) ??
+                    p.sprites.front_default
                   }
                   alt={`Failed to load ${p.name}`}
-                  width={200}
-                  height={200}
+                  // width={200}
+                  // height={200}
                   loading="lazy"
+                  id={`${p.name}`}
                   className="h-full w-full rounded-lg object-contain transition hover:scale-105 hover:drop-shadow-[0px_0px_5px_rgba(255,0,0,1.0)]"
                 />
               </div>
+              <label htmlFor={`${p.name}`}>
+                <span className="text-xl">{capitalize(p.name)}</span>
+              </label>
             </div>
           );
         })}

@@ -1,0 +1,23 @@
+diff --git a/node_modules/pokenode-ts/lib/index.d.ts b/node_modules/pokenode-ts/lib/index.d.ts
+index 8359296..4351f0b 100644
+--- a/node_modules/pokenode-ts/lib/index.d.ts
++++ b/node_modules/pokenode-ts/lib/index.d.ts
+@@ -1368,6 +1368,18 @@ interface OtherPokemonSprites {
+     "official-artwork": OfficialArtwork;
+     /** Home Artwork Sprites of this Pokémon */
+     home: Home;
++
++    showdown: Showdown;
++}
++interface Showdown {
++    back_default: string | null;
++    back_female: string | null;
++    back_shiny: string | null;
++    back_shiny_female: string | null;
++    front_default: string | null;
++    front_female: string | null;
++    front_shiny: string | null;
++    front_shiny_female: string | null;
+ }
+ /** Dream World sprites */
+ interface DreamWorld {

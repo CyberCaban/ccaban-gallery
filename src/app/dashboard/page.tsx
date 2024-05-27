@@ -1,5 +1,4 @@
-import { Protect, SignedIn, SignedOut } from "@clerk/nextjs";
-import { auth, getAuth } from "@clerk/nextjs/server";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { getDashboard } from "~/server/queries";
 
 export const dynamic = "force-dynamic";

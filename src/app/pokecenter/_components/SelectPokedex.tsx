@@ -127,28 +127,27 @@ async function Pokemons({
       <div className="flex flex-wrap justify-center text-center transition">
         {pokemonPics.map((p, i) => {
           return (
-            <div
-              key={p.id}
-              className="m-2 flex w-48 flex-col items-center rounded-sm p-3 outline outline-1 outline-white"
-            >
-              <div className="m-2 h-48 w-48">
-                <img
-                  src={
-                    getPokemonImageUrl(p.sprites, searchParams.sprite) ??
-                    p.sprites.front_default
-                  }
-                  alt={`Failed to load ${p.name}`}
-                  // width={200}
-                  // height={200}
-                  loading="lazy"
-                  id={`${p.name}`}
-                  className="h-full w-full rounded-lg object-contain transition hover:scale-105 hover:drop-shadow-[0px_0px_5px_rgba(255,0,0,1.0)]"
-                />
+            <Link href={`/pokecenter/card/${p.name}`} key={p.id}>
+              <div className="m-2 flex w-48 flex-col items-center rounded-sm p-3 outline outline-1 outline-white">
+                <div className="m-2 h-48 w-48">
+                  <img
+                    src={
+                      getPokemonImageUrl(p.sprites, searchParams.sprite) ??
+                      p.sprites.front_default
+                    }
+                    alt={`Failed to load ${p.name}`}
+                    // width={200}
+                    // height={200}
+                    loading="lazy"
+                    id={`${p.name}`}
+                    className="h-full w-full rounded-lg object-contain transition hover:scale-105 hover:drop-shadow-[0px_0px_5px_rgba(255,0,0,1.0)]"
+                  />
+                </div>
+                <label htmlFor={`${p.name}`}>
+                  <span className="text-xl">{capitalize(p.name)}</span>
+                </label>
               </div>
-              <label htmlFor={`${p.name}`}>
-                <span className="text-xl">{capitalize(p.name)}</span>
-              </label>
-            </div>
+            </Link>
           );
         })}
       </div>

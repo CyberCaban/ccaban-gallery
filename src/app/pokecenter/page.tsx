@@ -3,7 +3,7 @@
 import { type PokedexSearchParams } from "~/lib/types";
 import SelectPokedex from "./_components/SelectPokedex";
 
-export default function PokecenterPage({
+export default async function PokecenterPage({
   searchParams,
 }: {
   searchParams: PokedexSearchParams;

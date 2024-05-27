@@ -1,4 +1,4 @@
-import { OtherPokemonSprites, Pokemon, PokemonSprites } from "pokenode-ts";
+import { type OtherPokemonSprites, type PokemonSprites } from "pokenode-ts";
 
 export type PokedexSearchParams = {
   pokedex: string;

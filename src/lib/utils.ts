@@ -1,7 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
-import { OtherPokemonSprites, PokemonSprites, type Pokemon } from "pokenode-ts";
+import { type PokemonSprites } from "pokenode-ts";
 import { twMerge } from "tailwind-merge";
-import { OtherSprites, PokemonSpritesWithShowdown, spriteTypes } from "./types";
+import { type spriteTypes } from "./types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

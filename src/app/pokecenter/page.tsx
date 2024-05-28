@@ -10,7 +10,7 @@ export default async function PokecenterPage({
 }) {
   return (
     <div>
-      {JSON.stringify(searchParams)}
+      {/* {JSON.stringify(searchParams)} */}
       <SelectPokedex searchParams={searchParams} />
     </div>
   );

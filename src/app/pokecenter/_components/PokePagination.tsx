@@ -23,6 +23,7 @@ export default function PokePagination({
       >
         <Button size={"sm"}>Prev Page</Button>
       </Link>
+      <h1 className="flex items-center text-xl">{pokemonSearchParams.page}</h1>
       <Link
         href={{
           query: {

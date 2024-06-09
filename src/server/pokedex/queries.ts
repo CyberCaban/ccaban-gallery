@@ -38,3 +38,7 @@ export async function getPokemonsByNames(pokemonNames: string[] = []) {
 
   return pokemons;
 }
+
+export async function getPokemonByName(name: string) {
+  return await pc.getPokemonByName(name);
+}

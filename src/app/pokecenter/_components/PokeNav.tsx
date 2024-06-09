@@ -1,10 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
-import { Button } from "~/components/ui/button";
 import { PokedexSearchParams } from "~/lib/types";
+import PokePagination from "./PokePagination";
 
 export default function PokeNav({
   searchParams: pokemonSearchParams,
@@ -27,37 +26,8 @@ export default function PokeNav({
   );
 
   return (
-    <nav className="flex flex-row gap-4">
-      <div className="mx-4 my-2 flex flex-row gap-4">
-        <Link
-          href={{
-            query: {
-              pokedex: pokemonSearchParams.pokedex,
-              page:
-                pokemonSearchParams.page > 1
-                  ? +pokemonSearchParams.page - 1
-                  : 1,
-              sprite: pokemonSearchParams.sprite,
-            },
-          }}
-        >
-          <Button size={"sm"}>Prev Page</Button>
-        </Link>
-        <Link
-          href={{
-            query: {
-              pokedex: pokemonSearchParams.pokedex,
-              page:
-                names.length === 10
-                  ? +pokemonSearchParams.page + 1
-                  : +pokemonSearchParams.page,
-              sprite: pokemonSearchParams.sprite,
-            },
-          }}
-        >
-          <Button size={"sm"}>Next Page</Button>
-        </Link>
-      </div>
+    <nav className="flex items-center gap-4 max-md:flex-col sm:flex-row">
+      <PokePagination searchParams={pokemonSearchParams} names={names} />
       <div className="flex items-center justify-center gap-1">
         <label htmlFor="sprite_select">Select sprite:</label>
         <select

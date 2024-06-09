@@ -11,6 +11,7 @@ import {
   getPokemonsByNames,
 } from "~/server/pokedex/queries";
 import PokeNav from "./PokeNav";
+import PokePagination from "./PokePagination";
 
 // export const dynamic = ""
 
@@ -22,22 +23,29 @@ async function PokedexList({
   const pokedexes = await getAllPokedexes();
 
   return (
-    <ul className="h-96 w-56 overflow-x-hidden overflow-y-scroll text-nowrap bg-zinc-900 p-2">
-      {pokedexes.map((pokedex: string) => (
-        <label htmlFor={pokedex} key={pokedex} className="w-full">
-          <Link
-            href={{ query: { pokedex, page: 1, sprite: searchParams.sprite } }}
-          >
-            <li
-              className="w-full rounded-md p-4 text-[1.5rem] hover:bg-zinc-950"
-              id={pokedex}
+    <div className="flex w-1/5 flex-col items-start">
+      <h1 className="text- m-2 flex-shrink flex-grow-0 text-clip rounded-md bg-zinc-700 px-4 py-3 text-center text-2xl">
+        Pokedex: {capitalize(searchParams.pokedex)}
+      </h1>
+      <ul className="h-96 overflow-x-hidden overflow-y-scroll text-nowrap rounded-sm bg-zinc-900 p-2">
+        {pokedexes.map((pokedex: string) => (
+          <label htmlFor={pokedex} key={pokedex} className="w-full">
+            <Link
+              href={{
+                query: { pokedex, page: 1, sprite: searchParams.sprite },
+              }}
             >
-              {capitalize(pokedex)}
-            </li>
-          </Link>
-        </label>
-      ))}
-    </ul>
+              <li
+                className="w-full rounded-md p-4 text-[1.5rem] hover:bg-zinc-950"
+                id={pokedex}
+              >
+                {capitalize(pokedex)}
+              </li>
+            </Link>
+          </label>
+        ))}
+      </ul>
+    </div>
   );
 }
 
@@ -50,7 +58,7 @@ async function Pokemons({
   const pokemonPics: Pokemon[] = await getPokemonsByNames(names);
 
   return (
-    <div className="flex w-4/5 flex-col overflow-y-hidden">
+    <div className="flex flex-grow flex-col overflow-y-hidden max-md:w-4/5 sm:w-full">
       <PokeNav searchParams={searchParams} names={names} />
       <div className="flex flex-wrap justify-center text-center transition">
         {pokemonPics.map((p) => {
@@ -60,8 +68,7 @@ async function Pokemons({
                 <div className="m-2 h-48 w-48">
                   <img
                     src={
-                      getPokemonImageUrl(p.sprites, searchParams.sprite) ??
-                      p.sprites.front_default
+                      getPokemonImageUrl(p.sprites, searchParams.sprite) ?? ""
                     }
                     alt={`Failed to load ${p.name}`}
                     // width={200}
@@ -79,6 +86,7 @@ async function Pokemons({
           );
         })}
       </div>
+      <PokePagination searchParams={searchParams} names={names} />
     </div>
   );
 }
@@ -98,7 +106,7 @@ export default function SelectPokedex({
     <div
       id="pokedex"
       title="pokedex"
-      className="flex w-full flex-row bg-zinc-800"
+      className="flex w-full bg-zinc-800 max-md:flex-col sm:flex-row"
     >
       <PokedexList searchParams={params} />
       <Pokemons searchParams={params} />

@@ -63,7 +63,8 @@ function SimpleUploadButton({ ...args }: Input) {
         toast.success("Uploaded!");
         router.refresh();
       },
-      onUploadError() {
+      onUploadError(e) {
+        console.log(e);
         toast.dismiss("uploading");
         toast.error("Failed to upload");
       },

@@ -23,11 +23,11 @@ async function PokedexList({
   const pokedexes = await getAllPokedexes();
 
   return (
-    <div className="flex w-1/5 flex-col items-start">
-      <h1 className="text- m-2 flex-shrink flex-grow-0 text-clip rounded-md bg-zinc-700 px-4 py-3 text-center text-2xl">
+    <div className="flex max-sm:w-full max-sm:flex-row max-sm:justify-center sm:flex-col sm:items-start">
+      <h1 className="m-2 flex-shrink flex-grow-0 text-clip rounded-md bg-zinc-700 px-4 py-3 text-center text-2xl">
         Pokedex: {capitalize(searchParams.pokedex)}
       </h1>
-      <ul className="h-96 overflow-x-hidden overflow-y-scroll text-nowrap rounded-sm bg-zinc-900 p-2">
+      <ul className="max-sm:max-w-1/2 overflow-x-hidden overflow-y-scroll text-nowrap rounded-sm bg-zinc-900 p-2 max-sm:max-h-[30vh] sm:h-96">
         {pokedexes.map((pokedex: string) => (
           <label htmlFor={pokedex} key={pokedex} className="w-full">
             <Link
@@ -60,7 +60,7 @@ async function Pokemons({
   return (
     <div className="flex flex-grow flex-col overflow-y-hidden max-md:w-4/5 sm:w-full">
       <PokeNav searchParams={searchParams} names={names} />
-      <div className="flex flex-wrap justify-center text-center transition">
+      <div className="m-2 flex flex-wrap justify-center text-center transition">
         {pokemonPics.map((p) => {
           return (
             <Link href={`/pokecenter/card/${p.name}`} key={p.name}>
@@ -91,7 +91,7 @@ async function Pokemons({
   );
 }
 
-export default function SelectPokedex({
+export default function PokedexPage({
   searchParams,
 }: {
   searchParams: PokedexSearchParams;
@@ -106,7 +106,7 @@ export default function SelectPokedex({
     <div
       id="pokedex"
       title="pokedex"
-      className="flex w-full bg-zinc-800 max-md:flex-col sm:flex-row"
+      className="flex w-full bg-zinc-800 max-sm:flex-col max-sm:items-center sm:flex-row"
     >
       <PokedexList searchParams={params} />
       <Pokemons searchParams={params} />

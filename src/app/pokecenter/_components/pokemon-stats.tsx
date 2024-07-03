@@ -1,13 +1,12 @@
-import { convertSprites, flattenObject } from "~/lib/utils";
+import { flattenObject } from "~/lib/utils";
 import { getPokemonByName } from "~/server/pokedex/queries";
 
 export default async function PokemonStats(props: { name: string }) {
   const poke = await getPokemonByName(props.name);
   const sprites = flattenObject(poke.sprites);
-  console.log("poke", sprites);
 
   return (
-    <div>
+    <div className="flex flex-col">
       <div className="text-3xl text-white">hello {poke.name}</div>;
       <h1 className="text-3xl text-red-700">Stats</h1>
       {poke.stats.map((stat) => (
@@ -28,13 +27,16 @@ export default async function PokemonStats(props: { name: string }) {
         </div>
       ))}
       <h1 className="text-3xl text-red-700">Moves</h1>
-      {poke.moves.map((move) => (
-        <div className="text-white" key={move.move.name}>
-          {move.move.name}
-        </div>
-      ))}
-      {Object.keys(sprites).map((key) => {
-        if (sprites[key]) {
+      {poke.moves.map(
+        (move, i) =>
+          i < 6 && (
+            <div className="text-white" key={move.move.name}>
+              {move.move.name}
+            </div>
+          ),
+      )}
+      {Object.keys(sprites).map((key, i) => {
+        if (sprites[key] && i < 6) {
           return (
             <img
               src={sprites[key]}
@@ -42,6 +44,7 @@ export default async function PokemonStats(props: { name: string }) {
               width={200}
               height={200}
               className="text-white"
+              loading="lazy"
               key={key}
             />
           );
